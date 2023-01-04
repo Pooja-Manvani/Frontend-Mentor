@@ -1,0 +1,99 @@
+/* Imports of Bootstrap and leaflets here */
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+@import "../node_modules/leaflet/dist/leaflet.css";
+
+/* All styles here */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+
+.background-img-container {
+  background-image: url("assets/images/pattern-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 30%;
+}
+
+.main-container {
+  position: relative;
+}
+
+.header-title-conatiner {
+  position: relative;
+  padding: 1rem;
+}
+
+.header-text {
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+.ip-container {
+  max-width: 55%;
+  position: fixed;
+  bottom: 55%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  transform: translateY(50%);
+  z-index: 9999;
+}
+@media (min-width: 992px) { 
+  .ip-container {
+    bottom: 70%;
+  }
+}
+
+.header-input {
+  border: none;
+  border-radius: 15px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#headerInput:focus {
+  outline: none;
+}
+
+.arrow-icon-container {
+  background-color: #000;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.arrow-icon {
+  padding: 1.25rem;
+}
+
+.leaflet-container {
+  position: static !important;
+}
+
+@media (min-width: 992px) { 
+  .info-card{
+    border-right: 2px solid lightgray;
+    padding-right: 2.5rem;
+    padding: 0.75rem;
+  }
+}
+
+.info-text{
+  font-size: small;
+  font-weight: bold;
+  color: rgba(129, 129, 129, 0.788);
+}
