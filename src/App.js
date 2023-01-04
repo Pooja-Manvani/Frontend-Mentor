@@ -1,6 +1,6 @@
 import "./App.css";
 // ---------------------------------------------------------------
-import {REACT_APP_API_KEY} from './environtment.ts'
+import { REACT_APP_API_KEY } from "./environtment.ts";
 import arrow from "../src/assets/images/icon-arrow.svg";
 import MarkerPosition from "./Components/MarkerPosition";
 // ------------------------------------------------------------
@@ -8,19 +8,23 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import { useEffect, useState } from "react";
 
 function App() {
-/**
- * UseState Hook for address and IPAddress
- */
-  const [address, setAddress] = useState(null);
+  /**
+   * UseState Hook for address and IPAddress
+   */
+  const [address, setAddress] = useState("");
   const [ipAddress, setIpAddress] = useState("");
+  const [inputValue, setInputValue] = useState("");
+
+  const[latitude, setLatitude] = useState(21.17305)
+  const[longitude, setLongitude] = useState(72.79352)
 
   const checkIpAddress =
     /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi;
   const checkDomain =
     /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+/;
-/**
- * UseEffect Hook 
- */
+  /**
+   * UseEffect Hook
+   */
   useEffect(() => {
     try {
       const getInitialData = async () => {
@@ -43,9 +47,8 @@ function App() {
    */
   const getEnteredData = async () => {
     const res = await fetch(
-      `https://geo.ipify.org/api/v2/country,city?apiKey=${
-        REACT_APP_API_KEY
-      }&${
+      `https://geo.ipify.org/api/v2/country,city?apiKey=${REACT_APP_API_KEY}&
+      ${
         checkIpAddress.test(ipAddress)
           ? `ipAddress=${ipAddress}`
           : checkDomain.test(ipAddress)
@@ -55,19 +58,30 @@ function App() {
       // https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}&ipAddress=8.8.8.8&domain=google.com
     );
     const data = await res.json();
+    console.log(setAddress(data))
     setAddress(data);
+    setLatitude(data.location.lat)
+    console.log(setLatitude(data.location.lat))
+    setLongitude(data.location.lng)
+    console.log(setLongitude(data.location.lng))
   };
 
   /**
    * @name handleSubmit
    * @param {*} e
-   * @description handler for get API call and setIPAddress value. 
-   */
+   * @description handler for get API call and setIPAddress value.
+  */
+
+  useEffect(() => {
+    setIpAddress(inputValue);
+  }, [inputValue]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     getEnteredData();
-    setIpAddress("");
   };
+
+
 
   return (
     // Section Start
@@ -78,68 +92,74 @@ function App() {
           <div className="header-title-conatiner">
             <h4 className="header-text">IP Address Tracker</h4>
 
-         <form
-          onSubmit={handleSubmit}
-          autoComplete="off"
-         >
-          {/* Input for IP Address */}
+            <form autoComplete="off">
+              {/* Input for IP Address */}
               <div className="d-flex align-items-center justify-content-center overflow-hidden">
                 <label htmlFor="headerInput"></label>
                 <input
-                  value={ipAddress}
-                  onChange={(e) => setIpAddress(e.target.value)}
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
                   id="headerInput"
                   type="text"
                   className="text-truncate overflow-hidden header-input shadow w-25 border-0 p-3 text-align-center "
                   placeholder="Search for any IP address or domain"
                 />
                 {/* Button for Submit Input IP Address value */}
-                <button type="submit" className="arrow-icon-container text-align-center">
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  className="arrow-icon-container text-align-center"
+                >
                   <img className="arrow-icon fs-6" src={arrow} alt="arrow" />
                 </button>
               </div>
-         </form>
-            </div>
-          {/* End: Input And Title HEADER section */}
-          
-        {/* Start:Ip Details Container */}
-        {address && ( 
-          <div className="ip-container rounded-5 p-5 shadow border border-blue bg-white d-lg-flex text-center justify-content-around overflow-hidden">
-            <div className="info-card overflow-hidden">
-              <p className="info-text text-truncate">IP ADDRESS</p>
-              <p className="fs-5 fw-bold text-truncate">{address.ip}</p>
-            </div>
-            <div className="info-card overflow-hidden">
-              <p className="info-text text-truncate">LOCATION</p>
-              <p className="fs-5 fw-bold text-truncate">{address.location.city}, {address.location.region}</p>
-            </div>
-            <div className="info-card overflow-hidden">
-              <p className="info-text text-truncate">TIME ZONE</p>
-              <p className="fs-5 fw-bold text-truncate">UTC{address.location.timezone}</p>
-            </div>
-            <div className="p-2 overflow-hidden">
-              <p className="info-text text-truncate">ISP</p>
-              <p className="fw-bold fs-5 text-truncate">{address.isp}</p>
-            </div>
+            </form>
           </div>
+          {/* End: Input And Title HEADER section */}
+
+          {/* Start:Ip Details Container */}
+          {address && (
+            <div className="ip-container rounded-5 p-5 shadow border border-blue bg-white d-lg-flex text-center justify-content-around overflow-hidden">
+              <div className="info-card overflow-hidden">
+                <p className="info-text text-truncate">IP ADDRESS</p>
+                <p className="fs-5 fw-bold text-truncate">{address.ip}</p>
+              </div>
+              <div className="info-card overflow-hidden">
+                <p className="info-text text-truncate">LOCATION</p>
+                <p className="fs-5 fw-bold text-truncate">
+                  {address.location?.city}, {address.location?.region}
+                </p>
+              </div>
+              <div className="info-card overflow-hidden">
+                <p className="info-text text-truncate">TIME ZONE</p>
+                <p className="fs-5 fw-bold text-truncate">
+                  UTC{address.location?.timezone}
+                </p>
+              </div>
+              <div className="p-2 overflow-hidden">
+                <p className="info-text text-truncate">ISP</p>
+                <p className="fw-bold fs-5 text-truncate">{address.isp}</p>
+              </div>
+            </div>
           )}
         </div>
         {/* End:Ip Details Container */}
         {/* Start: Map Container */}
-        {address && ( 
-          <div className="flex-grow-1 position-relative overflow-hidden">
+        {address&&
+        <div className="flex-grow-1 position-relative overflow-hidden">
           <MapContainer
             className="h-100"
-            center={[address.location.lat, address.location.lng]}
+            center={[latitude, longitude]}
             zoom={13}
             scrollWheelZoom={false}
           >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             {/* Child component MarkerPosition */}
-            <MarkerPosition address={address} />
+            <MarkerPosition address={address} latitude={latitude} longitude={longitude}/>
+            
           </MapContainer>
         </div>
-        )}
+        }
         {/* End: Map Container */}
       </main>
     </section>
