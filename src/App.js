@@ -13,7 +13,6 @@ function App() {
    */
   const [address, setAddress] = useState("");
   const [ipAddress, setIpAddress] = useState("");
-  const [inputValue, setInputValue] = useState("");
 
   const[latitude, setLatitude] = useState(21.17305)
   const[longitude, setLongitude] = useState(72.79352)
@@ -39,14 +38,14 @@ function App() {
     } catch (error) {
       console.trace(error);
     }
-  }, [ipAddress]);
+  }, []);
 
   /**
    * @name getEnteredData
    * @description get input IP Address.
    */
   const getEnteredData = async () => {
-    const res = await fetch(
+    const res =  await fetch(
       `https://geo.ipify.org/api/v2/country,city?apiKey=${REACT_APP_API_KEY}&
       ${
         checkIpAddress.test(ipAddress)
@@ -57,13 +56,10 @@ function App() {
       }`
       // https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}&ipAddress=8.8.8.8&domain=google.com
     );
-    const data = await res.json();
-    console.log(setAddress(data))
+    const data =  await res.json();
     setAddress(data);
-    setLatitude(data.location.lat)
-    console.log(setLatitude(data.location.lat))
-    setLongitude(data.location.lng)
-    console.log(setLongitude(data.location.lng))
+    setLatitude(data.location.lat);
+    setLongitude(data.location.lng);
   };
 
   /**
@@ -71,17 +67,10 @@ function App() {
    * @param {*} e
    * @description handler for get API call and setIPAddress value.
   */
-
-  useEffect(() => {
-    setIpAddress(inputValue);
-  }, [inputValue]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    getEnteredData();
-  };
-
-
+ const handleSubmit = (e) => {
+   e.preventDefault();
+   getEnteredData();
+ };
 
   return (
     // Section Start
@@ -97,8 +86,8 @@ function App() {
               <div className="d-flex align-items-center justify-content-center overflow-hidden">
                 <label htmlFor="headerInput"></label>
                 <input
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
+                  value={ipAddress}
+                  onChange={(e) => setIpAddress(e.target.value)}
                   id="headerInput"
                   type="text"
                   className="text-truncate overflow-hidden header-input shadow w-25 border-0 p-3 text-align-center "
@@ -119,24 +108,24 @@ function App() {
 
           {/* Start:Ip Details Container */}
           {address && (
-            <div className="ip-container rounded-5 p-5 shadow border border-blue bg-white d-lg-flex text-center justify-content-around overflow-hidden">
-              <div className="info-card overflow-hidden">
+            <div className="ip-container rounded-5 p-4 text-center shadow border border-blue bg-white d-lg-flex justify-content-around overflow-hidden">
+              <div className="info-card overflow-hidden px-4">
                 <p className="info-text text-truncate">IP ADDRESS</p>
                 <p className="fs-5 fw-bold text-truncate">{address.ip}</p>
               </div>
-              <div className="info-card overflow-hidden">
+              <div className="info-card overflow-hidden px-4">
                 <p className="info-text text-truncate">LOCATION</p>
                 <p className="fs-5 fw-bold text-truncate">
                   {address.location?.city}, {address.location?.region}
                 </p>
               </div>
-              <div className="info-card overflow-hidden">
+              <div className="info-card overflow-hidden px-4">
                 <p className="info-text text-truncate">TIME ZONE</p>
                 <p className="fs-5 fw-bold text-truncate">
                   UTC{address.location?.timezone}
                 </p>
               </div>
-              <div className="p-2 overflow-hidden">
+              <div className="p-2 overflow-hidden px-4">
                 <p className="info-text text-truncate">ISP</p>
                 <p className="fw-bold fs-5 text-truncate">{address.isp}</p>
               </div>
@@ -155,7 +144,7 @@ function App() {
           >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             {/* Child component MarkerPosition */}
-            <MarkerPosition address={address} latitude={latitude} longitude={longitude}/>
+            <MarkerPosition  latitude={latitude} longitude={longitude}/>
             
           </MapContainer>
         </div>

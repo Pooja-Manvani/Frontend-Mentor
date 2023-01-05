@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { Marker, Popup, useMap } from "react-leaflet";
 import icon from "../Components/icon";
 
-export default function MarkerPosition({ address, latitude, longitude }) {
+export default function MarkerPosition({  latitude, longitude }) {
   /**
    * @description set Postion as lattitudes, longittudes for marker.
    */
