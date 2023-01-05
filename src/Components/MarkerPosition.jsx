@@ -2,14 +2,16 @@ import React, { useEffect, useMemo } from "react";
 import { Marker, Popup, useMap } from "react-leaflet";
 import icon from "../Components/icon";
 
-export default function MarkerPosition({ address }) {
+export default function MarkerPosition({  latitude, longitude }) {
   /**
    * @description set Postion as lattitudes, longittudes for marker.
    */
+
   const position = useMemo(() => {
-    return [address.location.lat, address.location.lng];
-  }, [address.location.lat, address.location.lng]);
+    return [latitude, longitude];
+  }, [latitude, longitude]);
   const map = useMap();
+  map.setView([latitude, longitude], map.getZoom());
   /**
    * UseEffect Hook
    */
