@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/Frontend-Mentor/static/css/main.8eb8397f.css",
-    "main.js": "/Frontend-Mentor/static/js/main.1182e36a.js",
+    "main.js": "/Frontend-Mentor/static/js/main.c12912a2.js",
     "static/js/787.ae94230f.chunk.js": "/Frontend-Mentor/static/js/787.ae94230f.chunk.js",
     "static/media/pattern-bg.png": "/Frontend-Mentor/static/media/pattern-bg.a60a3c85aa8b88aac4b7.png",
     "index.html": "/Frontend-Mentor/index.html",
     "static/media/icon-location.svg": "/Frontend-Mentor/static/media/icon-location.7e6459d2a9278295ae782e100965be4b.svg",
     "static/media/icon-arrow.svg": "/Frontend-Mentor/static/media/icon-arrow.2eaaa5ee3602d5aa14a2dba69e9fb7a0.svg",
     "main.8eb8397f.css.map": "/Frontend-Mentor/static/css/main.8eb8397f.css.map",
-    "main.1182e36a.js.map": "/Frontend-Mentor/static/js/main.1182e36a.js.map",
+    "main.c12912a2.js.map": "/Frontend-Mentor/static/js/main.c12912a2.js.map",
     "787.ae94230f.chunk.js.map": "/Frontend-Mentor/static/js/787.ae94230f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8eb8397f.css",
-    "static/js/main.1182e36a.js"
+    "static/js/main.c12912a2.js"
   ]
 }
